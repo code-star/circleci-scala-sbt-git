@@ -10,8 +10,8 @@ FROM  openjdk:8-jdk-alpine
 ARG SCALA_VERSION
 ARG SBT_VERSION
 
-ENV SCALA_VERSION ${SCALA_VERSION:-2.12.4}
-ENV SBT_VERSION ${SBT_VERSION:-0.13.15}
+ENV SCALA_VERSION ${SCALA_VERSION:-2.12.5}
+ENV SBT_VERSION ${SBT_VERSION:-1.1.1}
 
 RUN \
   echo "building docker image for scala $SCALA_VERSION sbt $SBT_VERSION"
@@ -34,7 +34,7 @@ RUN \
 
 RUN \
   echo "Downloading and setting up SBT ${SBT_VERSION}" && \
-  if [ ${SBT_VERSION:0:1} == "0" ] ; then SBT_URL="http://dl.bintray.com/sbt/native-packages/sbt/$SBT_VERSION/sbt-$SBT_VERSION.tgz" ; else SBT_URL="https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz" ; fi && \
+  SBT_URL="https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz" && \
   curl -fsL $SBT_URL | tar xfz - -C /usr/local && \
   $(mv /usr/local/sbt-launcher-packaging-$SBT_VERSION /usr/local/sbt || true) \
   ln -s /usr/local/sbt/bin/* /usr/local/bin/ && \
