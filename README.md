@@ -34,7 +34,7 @@ docker build \
 ## Usage ##
 
 ```
-docker run -it --rm spikerlabs/scala-sbt /bin/bash
+docker run -it --rm codestar/circleci-scala-sbt-git /bin/bash
 ```
 
 ### Example .circleci/config.yml:
