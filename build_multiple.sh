@@ -2,10 +2,11 @@
 scala_versions=(
   2.11.12
   2.12.6
+  2.13.0-M4
 )
 sbt_versions=(
   0.13.17
-  1.1.4
+  1.1.6
 )
 
 for scala_version in ${scala_versions[@]}; do
