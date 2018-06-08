@@ -1,9 +1,13 @@
-# Scala and sbt Dockerfile
+# Scala, SBT and Git Dockerfile 
 
-[Scala](http://www.scala-lang.org), [sbt](http://www.scala-sbt.org) and [git](https://git-scm.com/) container.
+[Scala](http://www.scala-lang.org), [SBT](http://www.scala-sbt.org) and [Git](https://git-scm.com/) container.
 
-Useful for building in environments like CircleCI v2.
+This image can be build Scala projects on CircleCI v2, but is generic and not tied to CircleCI.
 
+Using this image over [the default recommendation](https://circleci.com/blog/migrating-your-scala-sbt-schema-from-circleci-1-0-to-circleci-2-0/) has several advantages:
+
+* Your config.xml remains small
+* The correct version of Scala and SBT does not have to be downloaded/cached, it is contained within the container
 
 ## Base Docker Image ##
 
@@ -26,15 +30,15 @@ Or with specific versions:
 ```
 docker build \
   -t circleci-scala-sbt-git \
-  --build-arg SCALA_VERSION=2.12.3 \
-  --build-arg SBT_VERSION=0.13.15 \
+  --build-arg SCALA_VERSION=2.12.6 \
+  --build-arg SBT_VERSION=1.1.6 \
   github.com/code-star/circleci-scala-sbt-git
 ```
 
 ## Usage ##
 
 ```
-docker run -it --rm spikerlabs/scala-sbt /bin/bash
+docker run -it --rm codestar/circleci-scala-sbt-git /bin/bash
 ```
 
 ### Example .circleci/config.yml:
@@ -45,7 +49,7 @@ jobs:
   build:
     working_directory: ~/my-project
     docker:
-      - image: codestar/circleci-scala-sbt-git:scala-2.12.2-sbt-0.13.15
+      - image: codestar/circleci-scala-sbt-git:scala-2.12.6-sbt-1.1.6
     steps:
       - checkout
 
@@ -55,7 +59,6 @@ jobs:
             - my-project
 
       - run:
-          # TODO: For some reason circleci gets stuck in the shell if we don't add exit to sbt
           command:
             sbt compile test:compile exit
 
