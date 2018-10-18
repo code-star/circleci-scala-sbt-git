@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 scala_versions=(
   2.11.12
-  2.12.6
-  2.13.0-M4
+  2.12.7
+  2.13.0-M5
 )
 sbt_versions=(
   0.13.17
   1.1.6
-  1.2.1
+  1.2.4
 )
 
 for scala_version in ${scala_versions[@]}; do
