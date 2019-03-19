@@ -2,7 +2,7 @@
 
 This docker image has become superfluous, CircleCI is now publishing an image with SBT included
 
-Example dockerfile for Scala and SBT development:
+Example `config.yml` file for Scala and SBT development:
 
 ```
 version: 2.1
