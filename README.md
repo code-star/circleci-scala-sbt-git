@@ -2,12 +2,11 @@
 
 [Scala](http://www.scala-lang.org), [SBT](http://www.scala-sbt.org) and [Git](https://git-scm.com/) container.
 
+**Note**: Since the beginning of this docker image CircleCI has published [a OpenJDK image with sbt included](https://circleci.com/docs/2.0/circleci-images/#openjdk). This is a reasonable default image to use.
+
 This image can be build Scala projects on CircleCI v2, but is generic and not tied to CircleCI.
 
-Using this image over [the default recommendation](https://circleci.com/blog/migrating-your-scala-sbt-schema-from-circleci-1-0-to-circleci-2-0/) has several advantages:
-
-* Your config.xml remains small
-* The correct version of Scala and SBT does not have to be downloaded/cached, it is contained within the container
+Using this image over [CircleCI's openJDK image](https://circleci.com/docs/2.0/circleci-images/#openjdk) has the advantage that the correct version of Scala and SBT does not have to be downloaded/cached, it is contained within the container. This comes at the disadvantage of hardcoding the SBT and Scala version in the tag.
 
 ## Base Docker Image ##
 
@@ -30,8 +29,8 @@ Or with specific versions:
 ```
 docker build \
   -t circleci-scala-sbt-git \
-  --build-arg SCALA_VERSION=2.12.6 \
-  --build-arg SBT_VERSION=1.1.6 \
+  --build-arg SCALA_VERSION=2.12.9 \
+  --build-arg SBT_VERSION=1.2.8 \
   github.com/code-star/circleci-scala-sbt-git
 ```
 
@@ -49,7 +48,9 @@ jobs:
   build:
     working_directory: ~/my-project
     docker:
-      - image: codestar/circleci-scala-sbt-git:scala-2.12.6-sbt-1.1.6
+      - image: codestar/circleci-scala-sbt-git:scala-2.12.8-sbt-1.2.8
+      # Or the default CircleCI image: 
+      # - image: circleci/openjdk:8-jdk
     steps:
       - checkout
 
@@ -70,14 +71,14 @@ jobs:
             - project/target/resolution-cache
             - project/target/streams
             - ~/.sbt
-            - ~/.iv2/cache
+            - ~/.ivy2/cache
             - ~/.m2
       - save_cache:
           # Changing this to a different key is the only way to remove old dependencies from the cache and/or generate a more up-to-date cache
           key: my-project
           paths:
             - ~/.sbt
-            - ~/.iv2/cache
+            - ~/.ivy2/cache
             - ~/.m2
 
       - run:
