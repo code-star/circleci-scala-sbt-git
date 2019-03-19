@@ -16,7 +16,7 @@ jobs:
 
       - restore_cache:
           keys:
-            - app-cache-{{ checksum "project/build.sbt" }}-{{ checksum "build.sbt" }}
+            - app-cache-{{ checksum "build.sbt" }}
             - app-cache-v1
 
       - run:
@@ -24,7 +24,7 @@ jobs:
             sbt compile test:compile exit
 
       - save_cache:
-          key: app-cache-{{ checksum "project/build.sbt" }}-{{ checksum "build.sbt" }}
+          key: app-cache-{{ checksum "build.sbt" }}
           paths:
             - target/resolution-cache
             - target/streams
